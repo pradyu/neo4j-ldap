@@ -1,0 +1,45 @@
+dn: OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: organizationalUnit
+ou: Prad OU
+
+dn: CN=user1 exmaple,OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+cn: user1 exmaple
+sn: exmaple
+
+dn: CN=user2 sample,OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+cn: user2 sample
+sn: sample
+
+dn: CN=user3 sample,OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+cn: user3 sample
+sn: sample
+
+dn: CN=Group1,OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: posixGroup
+cn: Group1
+member: CN=Group2,OU=Prad OU,DC=hs,DC=trcint,DC=com
+member: CN=user1 exmaple,OU=Prad OU,DC=hs,DC=trcint,DC=com
+
+dn: CN=Group2,OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: group
+cn: Group2
+member: CN=Group3,OU=Prad OU,DC=hs,DC=trcint,DC=com
+member: CN=user2 sample,OU=Prad OU,DC=hs,DC=trcint,DC=com
+
+dn: CN=Group3,OU=Prad OU,DC=hs,DC=trcint,DC=com
+objectclass: top
+objectclass: group
+cn: Group3
+member: CN=user3 sample,OU=Prad OU,DC=hs,DC=trcint,DC=com

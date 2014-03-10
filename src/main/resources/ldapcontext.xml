@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:ldap="http://www.springframework.org/schema/ldap"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/ldap http://www.springframework.org/schema/ldap/spring-ldap.xsd">
+
+    <context:property-placeholder location="classpath:/ldap.properties" system-properties-mode="OVERRIDE" />
+    <context:annotation-config />
+
+    <ldap:context-source id="contextSource"
+                         password="${sample.ldap.password}"
+                         url="${sample.ldap.url}"
+                         username="${sample.ldap.userDn}"
+                         base="${sample.ldap.base}"
+                         referral="follow" >
+    </ldap:context-source>
+
+
+
+    <ldap:ldap-template id="ldapTemplate" context-source-ref="contextSource"/>
+
+    <!--
+        This will scan the org.springframework.ldap.samples.useradmin.domain package for interfaces
+        extending CrudRepository (in our case, LdapRepository), automatically creating repository
+        beans based on these interfaces.
+    -->
+    <ldap:repositories base-package="com.vmware.horizon.service" />
+
+    <!-- Required to make sure BaseLdapName is populated in UserService -->
+    <bean class="org.springframework.ldap.core.support.BaseLdapPathBeanPostProcessor" />
+
+</beans>
