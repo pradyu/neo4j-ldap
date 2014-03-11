@@ -7,8 +7,6 @@ public interface GroupRepository extends GraphRepository<Group> {
 
     Group findByName(String name);
 
-    Iterable<Group> findByMembersName(String name);
-
     Group findByCanonicalName(String canonicalName);
 
 }

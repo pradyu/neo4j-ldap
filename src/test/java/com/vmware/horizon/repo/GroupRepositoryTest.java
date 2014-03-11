@@ -1,11 +1,8 @@
 package com.vmware.horizon.repo;
 
 import com.vmware.horizon.ApplicationConfig;
-import com.vmware.horizon.entity.Entity;
 import com.vmware.horizon.entity.Group;
 import com.vmware.horizon.entity.User;
-import com.vmware.horizon.LdapConfig;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neo4j.graphdb.DynamicRelationshipType;
@@ -30,15 +27,6 @@ public class GroupRepositoryTest {
 
     @Autowired private GroupRepository groupRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private LdapConfig ldapConfig;
-
-    ArrayList<Entity> entities = new ArrayList<Entity>();
-
-    @Before
-    public void before() throws Exception {
-        ldapConfig.setupConnection();
-    }
-
 
     @Test
     @Transactional
@@ -48,9 +36,6 @@ public class GroupRepositoryTest {
 
         groupRepository.save(parent);
         groupRepository.save(member);
-
-        entities.add(parent);
-        entities.add(member);
 
         parent = groupRepository.findByName(parent.getName());
         assertNotNull(parent.getMembers());
@@ -71,12 +56,10 @@ public class GroupRepositoryTest {
     public void canAddMembers() {
         Group parent = new Group("parent");
         parent = groupRepository.save(parent);
-        entities.add(parent);
         assertNotNull(parent);
 
         User user = new User("user");
         userRepository.save(user);
-        entities.add(user);
 
         parent.addMember(user);
         parent = groupRepository.save(parent);
@@ -86,7 +69,6 @@ public class GroupRepositoryTest {
         Group child = new Group("member");
         parent.addMember(child);
         parent = groupRepository.save(parent);
-        entities.add(child);
         assertTrue(parent.getMembers().size() == 2);
     }
 

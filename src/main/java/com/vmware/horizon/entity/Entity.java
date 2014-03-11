@@ -43,7 +43,7 @@ public class Entity {
     }
 
     public enum Type {
-        USER, GROUP
+        USER, GROUP, RESOURCE
     }
 
     public String getCanonicalName() {
