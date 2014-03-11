@@ -1,6 +1,7 @@
 package com.vmware.horizon.service;
 
 import com.google.common.collect.Sets;
+import com.vmware.horizon.LdapConfig;
 import com.vmware.horizon.Util.ObjectGuidConverter;
 import com.vmware.horizon.entity.GroupLdap;
 import com.vmware.horizon.entity.LdapObject;
@@ -22,7 +23,8 @@ public class LdapService {
     @Autowired
     LdapTemplate ldapTemplate;
 
-    @Autowired LdapContext ldapContext;
+    @Autowired
+    LdapConfig ldapConfig;
 
     @Autowired
     ObjectGuidConverter objectGuidConverter;
@@ -37,7 +39,7 @@ public class LdapService {
 
         do {
             String filter = "(objectCategory=user)";
-            users.addAll(ldapTemplate.search(ldapContext.searchDN(), filter, searchControls, new UserContextMapper(), contextProcessor));
+            users.addAll(ldapTemplate.search(ldapConfig.searchDN(), filter, searchControls, new UserContextMapper(), contextProcessor));
         } while (contextProcessor.hasMore());
         return users;
     }
@@ -51,7 +53,7 @@ public class LdapService {
 
         do {
             String filter = "(objectclass=group)";
-            groups.addAll(ldapTemplate.search(ldapContext.searchDN(), filter, searchControls, new GroupContextMapper(), contextProcessor));
+            groups.addAll(ldapTemplate.search(ldapConfig.searchDN(), filter, searchControls, new GroupContextMapper(), contextProcessor));
         } while (contextProcessor.hasMore());
         return groups;
     }
@@ -63,7 +65,7 @@ public class LdapService {
     }
 
     public String getRemainingName(String dn) {
-        dn = dn.replace(ldapContext.getBasePath(), "");
+        dn = dn.replace(ldapConfig.getBasePath(), "");
         if (dn.length() > 0 && dn.charAt(dn.length()-1)==',') {
             dn = dn.substring(0, dn.length()-1);
         }
@@ -96,7 +98,7 @@ public class LdapService {
         public GroupLdap doMapFromContext(DirContextOperations context) {
             GroupLdap group = new GroupLdap();
             group.setName(context.getStringAttribute("cn"));
-            group.setCanonicalName(context.getDn().toString() + "," + ldapContext.getBasePath());
+            group.setCanonicalName(context.getDn().toString() + "," + ldapConfig.getBasePath());
             if (context.attributeExists("memberOf")) {
                 group.setMemberOf(Sets.newHashSet(context.getStringAttributes("memberOf")));
             }
@@ -111,7 +113,7 @@ public class LdapService {
         @Override
         public UserLdap doMapFromContext(DirContextOperations context) {
             UserLdap user = new UserLdap();
-            user.setCanonicalName(context.getDn().toString() + "," + ldapContext.getBasePath());
+            user.setCanonicalName(context.getDn().toString() + "," + ldapConfig.getBasePath());
             if (context.attributeExists("userPrincipalName")) {
                 user.setUserPrincipalName(context.getStringAttribute("userPrincipalName"));
             }

@@ -5,7 +5,6 @@ import com.vmware.horizon.entity.User;
 import com.vmware.horizon.entity.UserLdap;
 import com.vmware.horizon.repo.UserRepository;
 import com.vmware.horizon.service.GroupService;
-import com.vmware.horizon.service.LdapContext;
 import com.vmware.horizon.service.LdapService;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,12 +26,12 @@ public class LdapNeo4JTest {
     private static Logger logger = Logger.getLogger(LdapNeo4JTest.class.getName());
     @Autowired private LdapService ldapService;
     @Autowired private UserRepository userRepository;
-    @Autowired private LdapContext ldapContext;
+    @Autowired private LdapConfig ldapConfig;
     @Autowired private GroupService groupService;
 
     @Before
     public void before() throws Exception {
-        ldapContext.setupConnection();
+        ldapConfig.setupConnection();
     }
 
 

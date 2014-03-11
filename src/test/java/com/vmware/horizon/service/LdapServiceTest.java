@@ -1,6 +1,7 @@
 package com.vmware.horizon.service;
 
 import com.vmware.horizon.ApplicationConfig;
+import com.vmware.horizon.LdapConfig;
 import com.vmware.horizon.entity.GroupLdap;
 import com.vmware.horizon.entity.UserLdap;
 import org.junit.Before;
@@ -21,11 +22,11 @@ import static org.junit.Assert.assertTrue;
 public class LdapServiceTest {
 
     @Autowired private LdapService ldapService;
-    @Autowired private LdapContext ldapContext;
+    @Autowired private LdapConfig ldapConfig;
 
     @Before
     public void before() throws Exception {
-        ldapContext.setupConnection();
+        ldapConfig.setupConnection();
     }
 
     @Test

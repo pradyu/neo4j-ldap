@@ -5,7 +5,7 @@ import com.vmware.horizon.entity.Entity;
 import com.vmware.horizon.entity.Group;
 import com.vmware.horizon.entity.User;
 import com.vmware.horizon.evaluator.UserEvaluator;
-import com.vmware.horizon.service.LdapContext;
+import com.vmware.horizon.LdapConfig;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,12 +31,12 @@ public class UserRepositoryTest {
 
     @Autowired private GroupRepository groupRepository;
     @Autowired private UserRepository userRepository;
-    @Autowired private LdapContext ldapContext;
+    @Autowired private LdapConfig ldapConfig;
     ArrayList<Entity> entities = new ArrayList<Entity>();
 
     @Before
     public void before() throws Exception {
-        ldapContext.setupConnection();
+        ldapConfig.setupConnection();
     }
 
     @Test

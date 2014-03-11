@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.ImportResource;
 
 @ComponentScan
-@ImportResource(value = {"classpath:/ldapcontext.xml", "classpath:/embeddedLdapContext.xml"})
+@ImportResource(value = {"classpath:/ldapcontext.xml"})
 @Import(value = {Neo4JConfig.class})
 @EnableAutoConfiguration
 public class ApplicationConfig {

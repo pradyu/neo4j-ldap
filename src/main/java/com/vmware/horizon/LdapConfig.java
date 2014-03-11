@@ -1,4 +1,4 @@
-package com.vmware.horizon.service;
+package com.vmware.horizon;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ldap.core.LdapTemplate;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 @Service
-public class LdapContext {
+public class LdapConfig {
 
     @Autowired
     LdapTemplate ldapTemplate;

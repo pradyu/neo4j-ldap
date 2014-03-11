@@ -23,7 +23,7 @@ public class Neo4JConfig extends Neo4jConfiguration {
 
     @Bean(destroyMethod = "shutdown")
     GraphDatabaseService graphDatabaseService() {
-        return new GraphDatabaseFactory().newEmbeddedDatabase("accessingdataneo4j.db");
+        return new GraphDatabaseFactory().newEmbeddedDatabase("target/neo4j.db");
     }
 
     @Autowired

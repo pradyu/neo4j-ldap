@@ -1,5 +1,6 @@
 package com.vmware.horizon.service;
 
+import com.vmware.horizon.LdapConfig;
 import com.vmware.horizon.entity.Entity;
 import com.vmware.horizon.entity.Group;
 import com.vmware.horizon.entity.GroupLdap;
@@ -17,6 +18,7 @@ import org.neo4j.kernel.impl.traversal.TraversalDescriptionImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.naming.ldap.LdapContext;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
@@ -29,7 +31,8 @@ public class GroupService {
     @Autowired UserRepository userRepository;
     @Autowired GroupRepository groupRepository;
     @Autowired EntityRepository entityRepository;
-    @Autowired LdapContext ldapContext;
+    @Autowired
+    LdapConfig ldapConfig;
     @Autowired LdapService ldapService;
 
     public Iterable<User> traverseAllUsersFromGroup(Group group) {
@@ -57,7 +60,7 @@ public class GroupService {
                 if (entity != null) {
                     group.addMember(entity);
                 } else {
-                    if (! member.contains(ldapContext.getBasePath())) {
+                    if (! member.contains(ldapConfig.getBasePath())) {
                         continue;
                     }
                     logger.info("Could not get information about member - " + member);
