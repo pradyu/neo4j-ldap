@@ -3,6 +3,7 @@ package com.vmware.horizon.repo;
 import com.vmware.horizon.ApplicationConfig;
 import com.vmware.horizon.entity.Group;
 import com.vmware.horizon.entity.User;
+import com.vmware.horizon.evaluator.UserEvaluator;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.neo4j.graphdb.DynamicRelationshipType;
@@ -109,4 +110,36 @@ public class GroupRepositoryTest {
 
         assertTrue(allGroups.size() == 3);
     }
+
+    @Test
+    @Transactional
+    public void canFindUsersInNestedCircularGroups() {
+        Group parent = new Group("parent");
+        Group child = new Group("child");
+        User user1 = new User("user1");
+        parent.addMember(child);
+        groupRepository.save(parent);
+        child.addMember(parent);
+        child.addMember(user1);
+        groupRepository.save(child);
+        userRepository.save(user1);
+
+        TraversalDescription traversalDescription = new TraversalDescriptionImpl()
+                .breadthFirst()
+                .relationships(DynamicRelationshipType.withName("MEMBER"))
+                .evaluator(Evaluators.excludeStartPosition())
+                .evaluator(new UserEvaluator())
+                .evaluator(Evaluators.all());
+
+        Iterable<User> users = userRepository.findAllByTraversal(parent, traversalDescription);
+
+        Iterator<User> iterator = users.iterator();
+        ArrayList<User> allUsers = new ArrayList<User>();
+        while (iterator.hasNext()) {
+            allUsers.add(iterator.next());
+        }
+
+        assertTrue(allUsers.size() == 1);
+    }
+
 }

@@ -121,8 +121,7 @@ public class ResourceRepositoryTest {
                 .relationships(DynamicRelationshipType.withName("ENTITLED"))
                 .relationships(DynamicRelationshipType.withName("MEMBER"))
                 .evaluator(Evaluators.excludeStartPosition())
-                .evaluator(new ResourceEvaluator())
-                .evaluator(Evaluators.all());
+                .evaluator(new ResourceEvaluator());
 
         Iterable<Resource> resources = resourceRepository.findAllByTraversal(user1, traversalDescription);
 
@@ -133,7 +132,5 @@ public class ResourceRepositoryTest {
         }
 
         org.junit.Assert.assertTrue(allResources.size() == 2);
-
-
     }
 }
