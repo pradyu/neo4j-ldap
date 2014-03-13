@@ -1,11 +1,13 @@
 package com.vmware.horizon;
 
-import com.vmware.horizon.entity.GroupLdap;
-import com.vmware.horizon.entity.User;
-import com.vmware.horizon.entity.UserLdap;
-import com.vmware.horizon.repo.UserRepository;
-import com.vmware.horizon.service.GroupService;
-import com.vmware.horizon.service.LdapService;
+import com.pradyu.ApplicationConfig;
+import com.pradyu.LdapConfig;
+import com.pradyu.entity.GroupLdap;
+import com.pradyu.entity.User;
+import com.pradyu.entity.UserLdap;
+import com.pradyu.repo.UserRepository;
+import com.pradyu.service.GroupService;
+import com.pradyu.service.LdapService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
